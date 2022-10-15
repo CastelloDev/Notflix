@@ -1,0 +1,5 @@
+.topic-tray {
+  min-width: 16rem;
+  grid-area: menu;
+  overflow-y: auto;
+}
