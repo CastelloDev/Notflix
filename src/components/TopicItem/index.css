@@ -1,0 +1,16 @@
+.topic-item {
+  padding: 0.5rem 1rem;
+  font-size: 2rem;
+}
+
+.topic-item:hover {
+  cursor: pointer;
+  padding-left: calc(1rem - 0.125rem);
+  font-size: calc(2rem + 0.125rem);
+}
+
+.topic-item.selected {
+  padding-left: calc(1rem - 0.125rem);
+  border-left: 0.125rem solid black;
+  font-size: calc(2rem + 0.125rem);
+}
