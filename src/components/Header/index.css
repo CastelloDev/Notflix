@@ -1,4 +1,10 @@
 .header {
+  background-color: aqua;
   grid-area: header;
+  font-family: "Notflix Font";
+  font-size: 4rem;
+  align-items: center;
+  display: flex;
+  padding: 0rem 2rem;
   min-height: 4rem;
 }
