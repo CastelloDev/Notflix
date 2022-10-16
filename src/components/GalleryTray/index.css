@@ -1,6 +1,7 @@
 .gallery-tray {
   display: -webkit-inline-box;
   grid-area: top;
+  gap: 2rem;
   overflow-x: auto;
   padding: 1rem 2rem;
   max-height: 14rem;

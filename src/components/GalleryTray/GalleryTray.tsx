@@ -1,3 +1,4 @@
+import GalleryItem from "components/GalleryItem/GalleryItem";
 import { useEffect } from "react";
 import { useBoundStore } from "store/useBoundStore";
 import "./index.css";
@@ -16,7 +17,7 @@ const GalleryTray = () => {
   return (
     <div className="gallery-tray">
       {images.map((image) => (
-        <div key={image.id}>{image.id}</div>
+        <GalleryItem key={image.id} item={image} />
       ))}
     </div>
   );

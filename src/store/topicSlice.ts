@@ -22,6 +22,11 @@ export const createTopicSlice: StateCreator<
   getTopics: async () => {
     // TODO: optimise to build cache on results
     const topics = await getTopics();
-    set((state) => ({ topics }));
+    set((state) => {
+      if (!state.selectedTopic) {
+        return { ...state, topics, selectedTopic: topics[0] };
+      }
+      return { ...state, topics };
+    });
   },
 });

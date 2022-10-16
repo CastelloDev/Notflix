@@ -8,7 +8,6 @@ import "./App.css";
 
 const App = () => {
   const getTopics = useBoundStore((state) => state.getTopics);
-  const topics = useBoundStore((state) => state.topics);
 
   useEffect(() => {
     getTopics();
@@ -17,7 +16,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <TopicTray topics={topics} />
+      <TopicTray />
       <GalleryTray />
       <GalleryDisplay />
     </div>

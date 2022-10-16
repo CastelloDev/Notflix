@@ -1,12 +1,10 @@
 import TopicItem from "components/TopicItem/TopicItem";
-import { Topic } from "models/topic";
+import { useBoundStore } from "store/useBoundStore";
 import "./index.css";
 
-interface Props {
-  topics: Topic[];
-}
+function TopicTray() {
+  const topics = useBoundStore((state) => state.topics);
 
-function TopicTray({ topics }: Props) {
   return (
     <div className="topic-tray">
       {topics.map((topic) => (
