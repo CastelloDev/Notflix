@@ -4,13 +4,19 @@ import "./index.css";
 
 interface Props {
   item: Image;
+  references: React.MutableRefObject<any>;
+  referenceIndex: number;
 }
 
-const GalleryItem = ({ item }: Props) => {
+const GalleryItem = ({ item, references, referenceIndex }: Props) => {
   const selectImage = useBoundStore((state) => state.selectImage);
 
   return (
-    <div className="gallery-item" onClick={() => selectImage(item)}>
+    <div
+      className="gallery-item"
+      onClick={() => selectImage(item)}
+      ref={(el) => (references.current[referenceIndex] = el)}
+    >
       <img
         src={item.urls.small}
         alt={item.alt_description}

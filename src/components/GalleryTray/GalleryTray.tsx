@@ -27,21 +27,42 @@ const GalleryTray = () => {
     }
   }, [selectedTopic, getImagesForTopic, currentPage]);
 
+  const setImageRefs = useBoundStore((state) => state.setImageRefs);
+  const imageRefs = useRef([]);
+  useEffect(() => {
+    imageRefs.current = imageRefs.current.slice(0, images.length);
+    setImageRefs(imageRefs);
+  }, [images]);
+
+  const setLeftNavRef = useBoundStore((state) => state.setLeftNavRef);
+  const setRightNavRef = useBoundStore((state) => state.setRightNavRef);
+  const leftNavRef = useRef(null);
+  const rightNavRef = useRef(null);
+  useEffect(() => {
+    setLeftNavRef(leftNavRef);
+    setRightNavRef(rightNavRef);
+  }, []);
+
   const navLeftClassNames = classNames("nav left", {
     hidden: currentPage === 1,
   });
 
   return (
     <div className="gallery-tray">
-      <div className={navLeftClassNames} onClick={navBack}>
+      <div className={navLeftClassNames} onClick={navBack} ref={leftNavRef}>
         <div className="arrow-left"></div>
       </div>
       <div className="gallery-tray-inner" ref={innerTray}>
         {images.map((image, i) => (
-          <GalleryItem key={image.id} item={image} />
+          <GalleryItem
+            key={image.id}
+            item={image}
+            references={imageRefs}
+            referenceIndex={i}
+          />
         ))}
       </div>
-      <div className="nav right" onClick={navNext}>
+      <div className="nav right" onClick={navNext} ref={rightNavRef}>
         <div className="arrow-right"></div>
       </div>
     </div>

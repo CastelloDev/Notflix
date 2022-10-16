@@ -16,7 +16,8 @@ import {
 } from "data";
 
 const IS_DEV = process.env.REACT_APP_IS_DEV ?? "false";
-const isDevMode = IS_DEV === "true";
+// const isDevMode = IS_DEV === "true";
+const isDevMode = false;
 
 export const getTopics = async (): Promise<Topic[]> => {
   if (isDevMode) {
