@@ -70,6 +70,6 @@ export const getImagesForTopic = async (
       }
     });
   }
-  const resp = await unsplashClient.get(`/topics`);
+  const resp = await unsplashClient.get(`/topics/${topicSlug}/photos`);
   return resp.data;
 };
