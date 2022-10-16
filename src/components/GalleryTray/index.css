@@ -1,7 +1,6 @@
 .gallery-tray {
   position: relative;
   width: 100%;
-  margin: 0.5rem;
 }
 
 .gallery-tray-inner {
@@ -14,4 +13,50 @@
   gap: 20px;
   grid-auto-flow: column;
   overflow-y: auto;
+}
+
+.gallery-tray-inner::-webkit-scrollbar {
+  width: 0rem;
+  height: 0rem;
+}
+
+.nav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 4rem;
+  background-color: rgba(128, 128, 128, 0.75);
+  height: 100%;
+}
+
+.nav.left {
+  left: 0;
+}
+
+.nav.right {
+  right: 0;
+}
+
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 1.25rem solid transparent;
+  border-bottom: 1.25rem solid transparent;
+
+  border-right: 2rem solid white;
+}
+
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 1.25rem solid transparent;
+  border-bottom: 1.25rem solid transparent;
+
+  border-left: 2rem solid white;
+}
+
+.hidden {
+  display: none;
 }

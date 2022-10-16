@@ -8,7 +8,11 @@ export interface ImageState {
   images: Image[];
   selectedImage: Image;
   selectImage: (image: Image) => void;
-  getImagesForTopic: (topic: Topic) => void;
+  getImagesForTopic: (
+    topic: Topic,
+    pageNumber?: number,
+    pageSize?: number
+  ) => void;
 }
 
 export const createImageSlice: StateCreator<
@@ -20,9 +24,9 @@ export const createImageSlice: StateCreator<
   images: [],
   selectedImage: null,
   selectImage: (selectedImage) => set((state) => ({ ...state, selectedImage })),
-  getImagesForTopic: async (topic) => {
+  getImagesForTopic: async (topic, pageNumber, pageSize) => {
     // TODO: optimise to cache results
-    const images = await getImagesForTopic(topic.slug);
+    const images = await getImagesForTopic(topic.slug, pageNumber, pageSize);
     set((state) => ({ images, selectedImage: images[0] }));
   },
 });

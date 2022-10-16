@@ -73,7 +73,7 @@ export const getImagesForTopic = async (
     });
   }
   const resp = await unsplashClient.get(
-    `/topics/${topicSlug}/photos?per_page=${pageSize},page=${pageNumber}`
+    `/topics/${topicSlug}/photos?per_page=${pageSize}&page=${pageNumber}`
   );
   return resp.data;
 };
