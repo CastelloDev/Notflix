@@ -2,17 +2,17 @@ import GalleryDisplay from "components/GalleryDisplay/GalleryDisplay";
 import GalleryTray from "components/GalleryTray/GalleryTray";
 import Header from "components/Header/Header";
 import TopicTray from "components/TopicTray/TopicTray";
-import { useEffect, useState } from "react";
-import { getTopics } from "services/topicService";
+import { useEffect } from "react";
+import { useBoundStore } from "store/useBoundStore";
 import "./App.css";
 
 const App = () => {
-  const [topics, setTopics] = useState([]);
+  const getTopics = useBoundStore((state) => state.getTopics);
+  const topics = useBoundStore((state) => state.topics);
+
   useEffect(() => {
-    getTopics()
-      .then((resp) => setTopics(resp))
-      .catch((err) => console.error(err));
-  }, []);
+    getTopics();
+  }, [getTopics]);
 
   return (
     <div className="App">
