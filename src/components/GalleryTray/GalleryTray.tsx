@@ -16,9 +16,11 @@ const GalleryTray = () => {
 
   return (
     <div className="gallery-tray">
-      {images.map((image) => (
-        <GalleryItem key={image.id} item={image} />
-      ))}
+      <div className="gallery-tray-inner">
+        {images.map((image, i) => (
+          <GalleryItem key={image.id} item={image} />
+        ))}
+      </div>
     </div>
   );
 };

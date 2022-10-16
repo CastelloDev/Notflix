@@ -28,7 +28,9 @@ export const getTopics = async (): Promise<Topic[]> => {
 };
 
 export const getImagesForTopic = async (
-  topicSlug: string
+  topicSlug: string = "",
+  pageNumber = 1,
+  pageSize = 8
 ): Promise<Image[]> => {
   if (isDevMode) {
     // TODO: implement dynamic imports here to optimize code splitting
@@ -70,6 +72,8 @@ export const getImagesForTopic = async (
       }
     });
   }
-  const resp = await unsplashClient.get(`/topics/${topicSlug}/photos`);
+  const resp = await unsplashClient.get(
+    `/topics/${topicSlug}/photos?per_page=${pageSize},page=${pageNumber}`
+  );
   return resp.data;
 };

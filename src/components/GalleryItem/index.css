@@ -1,7 +1,34 @@
+:root {
+  --gallery-item-margin-vertical-spacing: 2rem;
+  --gallery-item-margin-horizontal-spacing: 2rem;
+  --gallery-item-gap-vertical-spacing: 1rem;
+  --gallery-item-gap-horizontal-spacing: 3rem;
+  --num-gallery-item-column-images: 3.5;
+  --num-gallery-item-row-images: 2;
+}
+
 .gallery-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: 100%;
   height: 100%;
+}
+
+.gallery-item img {
+  width: calc(
+    (
+        100vw - var(--topic-tray-width) -
+          var(--gallery-item-margin-horizontal-spacing) -
+          var(--gallery-item-gap-horizontal-spacing)
+      ) / var(--num-gallery-item-column-images)
+  );
+  height: calc(
+    (
+        100vh - var(--header-height) -
+          var(--gallery-item-margin-vertical-spacing) -
+          var(--gallery-item-gap-vertical-spacing)
+      ) / var(--num-gallery-item-row-images)
+  );
+  max-height: 100%;
 }

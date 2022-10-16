@@ -1,3 +1,7 @@
+:root {
+  --header-height: 5rem;
+}
+
 .header {
   background-color: aqua;
   grid-area: header;
@@ -5,6 +9,6 @@
   font-size: 4rem;
   align-items: center;
   display: flex;
-  padding: 0rem 2rem;
-  min-height: 4rem;
+  padding: 0.125rem 2rem;
+  height: var(--header-height);
 }

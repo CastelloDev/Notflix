@@ -1,5 +1,8 @@
+:root {
+  --topic-tray-width: 15rem;
+}
 .topic-tray {
-  min-width: 15rem;
+  width: var(--topic-tray-width);
   grid-area: menu;
   overflow-y: auto;
   padding: 1rem;
