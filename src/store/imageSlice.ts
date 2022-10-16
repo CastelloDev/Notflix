@@ -23,6 +23,6 @@ export const createImageSlice: StateCreator<
   getImagesForTopic: async (topic) => {
     // TODO: optimise to cache results
     const images = await getImagesForTopic(topic.slug);
-    set((state) => ({ images }));
+    set((state) => ({ images, selectedImage: images[0] }));
   },
 });

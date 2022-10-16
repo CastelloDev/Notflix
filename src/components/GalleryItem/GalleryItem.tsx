@@ -1,4 +1,5 @@
 import { Image } from "models/images";
+import { useBoundStore } from "store/useBoundStore";
 import "./index.css";
 
 interface Props {
@@ -6,8 +7,10 @@ interface Props {
 }
 
 const GalleryItem = ({ item }: Props) => {
+  const selectImage = useBoundStore((state) => state.selectImage);
+
   return (
-    <div className="gallery-item">
+    <div className="gallery-item" onClick={() => selectImage(item)}>
       <img
         src={item.urls.small}
         alt={item.alt_description}

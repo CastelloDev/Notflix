@@ -5,4 +5,5 @@
   overflow-x: auto;
   padding: 1rem 2rem;
   max-height: 14rem;
+  min-height: 8rem;
 }
