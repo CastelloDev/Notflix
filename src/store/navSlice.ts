@@ -111,10 +111,7 @@ export const createNavSlice: StateCreator<
         }
         case isRightNavRef(state.currentRef): {
           const imageRefs = state.refs.imageRefs.current;
-          const imageIndex =
-            state.currentPage === 1
-              ? imageRefs.length - 4
-              : imageRefs.length - 2;
+          const imageIndex = imageRefs.length - 4;
           const nextRef = state.refs.imageRefs.current[imageIndex];
           setRefStyle(state.currentRef, nextRef);
           return { ...state, currentRef: nextRef };
@@ -137,10 +134,7 @@ export const createNavSlice: StateCreator<
         case isImageRef(state.currentRef): {
           const imageRefs = state.refs.imageRefs.current;
           const index = imageRefs.findIndex((ir) => ir === state.currentRef);
-          const upperBound =
-            state.currentPage === 1
-              ? imageRefs.length - 4
-              : imageRefs.length - 2;
+          const upperBound = imageRefs.length - 4;
           if (index >= upperBound) {
             const nextRef = state.refs.rightNavRef.current;
             setRefStyle(state.currentRef, nextRef);
@@ -152,7 +146,7 @@ export const createNavSlice: StateCreator<
           return { ...state, currentRef: nextRef };
         }
         case isLeftNavRef(state.currentRef): {
-          const imageIndex = state.currentPage === 1 ? 2 : 4;
+          const imageIndex = 2;
           const nextRef = state.refs.imageRefs.current[imageIndex];
           setRefStyle(state.currentRef, nextRef);
           return { ...state, currentRef: nextRef };

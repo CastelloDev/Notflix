@@ -17,13 +17,6 @@ const GalleryTray = () => {
   useEffect(() => {
     if (selectedTopic) {
       getImagesForTopic(selectedTopic, currentPage);
-
-      if (currentPage === 1) {
-        innerTray.current.scrollLeft = 0;
-      } else {
-        innerTray.current.scrollLeft =
-          (innerTray.current.scrollWidth - innerTray.current.offsetWidth) / 2;
-      }
     }
   }, [selectedTopic, getImagesForTopic, currentPage]);
 
@@ -32,6 +25,13 @@ const GalleryTray = () => {
   useEffect(() => {
     imageRefs.current = imageRefs.current.slice(0, images.length);
     setImageRefs(imageRefs);
+
+    if (currentPage === 1) {
+      innerTray.current.scrollLeft = 0;
+    } else {
+      innerTray.current.scrollLeft =
+        (innerTray.current.scrollWidth - innerTray.current.offsetWidth) / 2;
+    }
   }, [images]);
 
   const setLeftNavRef = useBoundStore((state) => state.setLeftNavRef);
