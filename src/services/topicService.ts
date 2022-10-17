@@ -16,8 +16,7 @@ import {
 } from "data";
 
 const IS_DEV = process.env.REACT_APP_IS_DEV ?? "false";
-// const isDevMode = IS_DEV === "true";
-const isDevMode = false;
+const isDevMode = IS_DEV === "true";
 
 export const getTopics = async (): Promise<Topic[]> => {
   if (isDevMode) {
@@ -36,41 +35,47 @@ export const getImagesForTopic = async (
   if (isDevMode) {
     // TODO: implement dynamic imports here to optimize code splitting
     return new Promise((resolve, reject) => {
+      let result = [];
       switch (topicSlug) {
         case `food-drink`:
-          resolve(foodDrink);
+          result = foodDrink;
           break;
         case "current-events":
-          resolve(currentEvents);
+          result = currentEvents;
           break;
         case "wallpapers":
-          resolve(wallpapers);
+          result = wallpapers;
           break;
         case "3d-renders":
-          resolve(threeDRenders);
+          result = threeDRenders;
           break;
         case "textures-patterns":
-          resolve(texturesPatterns);
+          result = texturesPatterns;
           break;
         case "experimental":
-          resolve(experimental);
+          result = experimental;
           break;
         case "architecture":
-          resolve(architecture);
+          result = architecture;
           break;
         case "nature":
-          resolve(nature);
+          result = nature;
           break;
         case "business-work":
-          resolve(businessWork);
+          result = businessWork;
           break;
         case "fashion":
-          resolve(fashion);
+          result = fashion;
           break;
         default:
-          resolve([]);
+          result = [];
           break;
       }
+      const paginatedResult = result.slice(
+        (pageNumber - 1) * pageSize,
+        pageSize + 1
+      );
+      resolve(paginatedResult);
     });
   }
   const resp = await unsplashClient.get(

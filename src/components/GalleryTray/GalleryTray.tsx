@@ -16,8 +16,8 @@ const GalleryTray = () => {
 
   useEffect(() => {
     if (selectedTopic) {
-      const pageSize = currentPage === 1 ? 8 : 10;
-      getImagesForTopic(selectedTopic, currentPage, pageSize);
+      getImagesForTopic(selectedTopic, currentPage);
+
       if (currentPage === 1) {
         innerTray.current.scrollLeft = 0;
       } else {
