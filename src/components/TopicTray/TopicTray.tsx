@@ -3,6 +3,7 @@ import { useBoundStore } from "store/useBoundStore";
 import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import "./index.css";
+import { TopicRef } from "models/navRef";
 
 function TopicTray() {
   const topics = useBoundStore((state) => state.topics);
@@ -17,7 +18,7 @@ function TopicTray() {
   useEffect(() => {
     topicRefs.current = topicRefs.current.slice(0, topics.length);
     setTopicRefs(topicRefs);
-    setCurrentRef(topicRefs.current[0]);
+    setCurrentRef(new TopicRef(topicRefs.current[0]));
   }, [topics]);
 
   return (

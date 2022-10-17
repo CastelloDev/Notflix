@@ -1,33 +1,16 @@
+import { NavRef, Refs } from "models/navRef";
 import { StateCreator } from "zustand";
 import { BoundSliceStates } from "./useBoundStore";
 
-const isTopicRef = (ref) => ref.classList.contains("topic-item");
-const isImageRef = (ref) => ref.classList.contains("gallery-item");
-const isLeftNavRef = (ref) =>
-  ref.classList.contains("nav") && ref.classList.contains("left");
-const isRightNavRef = (ref) =>
-  ref.classList.contains("nav") && ref.classList.contains("right");
-
-const setRefStyle = (previousRef, nextRef) => {
-  previousRef.classList.remove("nav-selected");
-  nextRef.classList.add("nav-selected");
-};
-
-interface Refs {
-  topicRefs: React.MutableRefObject<any>;
-  imageRefs: React.MutableRefObject<any>;
-  leftNavRef: React.MutableRefObject<any>;
-  rightNavRef: React.MutableRefObject<any>;
-}
 export interface NavState {
   prevPage: number;
   currentPage: number;
-  currentRef: any;
+  currentRef: NavRef;
   navBack: () => void;
   navNext: () => void;
 
   refs: Refs;
-  setCurrentRef: (ref: any) => void;
+  setCurrentRef: (ref: NavRef) => void;
   setTopicRefs: (topicRefs: React.MutableRefObject<any>) => void;
   setImageRefs: (imageRefs: React.MutableRefObject<any>) => void;
   setLeftNavRef: (leftNavRef: React.MutableRefObject<any>) => void;
@@ -44,7 +27,7 @@ export const createNavSlice: StateCreator<
   [],
   [],
   NavState
-> = (set) => ({
+> = (set, get) => ({
   prevPage: 1,
   currentPage: 1,
   currentRef: null,
@@ -62,11 +45,12 @@ export const createNavSlice: StateCreator<
     })),
 
   refs: null,
-  setCurrentRef: (ref) =>
+  setCurrentRef: (ref) => {
     set((state) => ({
       ...state,
       currentRef: ref,
-    })),
+    }));
+  },
   setTopicRefs: (topicRefs) => {
     set((state) => ({
       ...state,
@@ -90,144 +74,39 @@ export const createNavSlice: StateCreator<
     })),
 
   handleLeft: () => {
-    set((state) => {
-      switch (true) {
-        case isImageRef(state.currentRef): {
-          const imageRefs = state.refs.imageRefs.current;
-          const index = imageRefs.findIndex((ir) => ir === state.currentRef);
-          const lowerBound = state.currentPage === 1 ? 2 : 4;
-          if (index < lowerBound) {
-            const nextRef =
-              state.currentPage === 1
-                ? state.refs.topicRefs.current[0]
-                : state.refs.leftNavRef.current;
-            setRefStyle(state.currentRef, nextRef);
-            return { ...state, currentRef: nextRef };
-          }
-
-          const nextRef = state.refs.imageRefs.current[index - 2];
-          setRefStyle(state.currentRef, nextRef);
-          return { ...state, currentRef: nextRef };
-        }
-        case isRightNavRef(state.currentRef): {
-          const imageRefs = state.refs.imageRefs.current;
-          const imageIndex = imageRefs.length - 4;
-          const nextRef = state.refs.imageRefs.current[imageIndex];
-          setRefStyle(state.currentRef, nextRef);
-          return { ...state, currentRef: nextRef };
-        }
-
-        default:
-          break;
-      }
-      return { ...state };
-    });
+    const refs = get().refs;
+    const currentPage = get().currentPage;
+    const currentRef = get().currentRef;
+    const newRef = currentRef.left(refs, currentPage);
+    if (newRef !== currentRef) {
+      set((state) => ({ ...state, currentRef: newRef }));
+    }
   },
   handleRight: () => {
-    set((state) => {
-      switch (true) {
-        case isTopicRef(state.currentRef): {
-          const nextRef = state.refs.imageRefs.current[0];
-          setRefStyle(state.currentRef, nextRef);
-          return { ...state, currentRef: nextRef };
-        }
-        case isImageRef(state.currentRef): {
-          const imageRefs = state.refs.imageRefs.current;
-          const index = imageRefs.findIndex((ir) => ir === state.currentRef);
-          const upperBound = imageRefs.length - 4;
-          if (index >= upperBound) {
-            const nextRef = state.refs.rightNavRef.current;
-            setRefStyle(state.currentRef, nextRef);
-            return { ...state, currentRef: nextRef };
-          }
-
-          const nextRef = state.refs.imageRefs.current[index + 2];
-          setRefStyle(state.currentRef, nextRef);
-          return { ...state, currentRef: nextRef };
-        }
-        case isLeftNavRef(state.currentRef): {
-          const imageIndex = 2;
-          const nextRef = state.refs.imageRefs.current[imageIndex];
-          setRefStyle(state.currentRef, nextRef);
-          return { ...state, currentRef: nextRef };
-        }
-
-        default:
-          break;
-      }
-      return { ...state };
-    });
+    const refs = get().refs;
+    const currentPage = get().currentPage;
+    const currentRef = get().currentRef;
+    const newRef = currentRef.right(refs, currentPage);
+    if (newRef !== currentRef) {
+      set((state) => ({ ...state, currentRef: newRef }));
+    }
   },
   handleUp: () => {
-    set((state) => {
-      switch (true) {
-        case isTopicRef(state.currentRef): {
-          const topicRefs = state.refs.topicRefs.current;
-          const index = topicRefs.findIndex((tr) => tr === state.currentRef);
-          if (index !== -1 && index !== 0) {
-            const nextRef = topicRefs[index - 1];
-            setRefStyle(state.currentRef, nextRef);
-            return {
-              ...state,
-              currentRef: nextRef,
-            };
-          }
-          break;
-        }
-        case isImageRef(state.currentRef): {
-          const imageRefs = state.refs.imageRefs.current;
-          const index = imageRefs.findIndex((ir) => ir === state.currentRef);
-          if (index !== -1 && index % 2 === 1) {
-            const nextRef = imageRefs[index - 1];
-            setRefStyle(state.currentRef, nextRef);
-            return {
-              ...state,
-              currentRef: nextRef,
-            };
-          }
-          break;
-        }
-
-        default:
-          break;
-      }
-      return state;
-    });
+    const refs = get().refs;
+    const currentPage = get().currentPage;
+    const currentRef = get().currentRef;
+    const newRef = currentRef.up(refs, currentPage);
+    if (newRef !== currentRef) {
+      set((state) => ({ ...state, currentRef: newRef }));
+    }
   },
   handleDown: () => {
-    set((state) => {
-      switch (true) {
-        case isTopicRef(state.currentRef): {
-          const topicRefs = state.refs.topicRefs.current;
-          const index = topicRefs.findIndex((tr) => tr === state.currentRef);
-          if (index !== -1 && index + 1 !== topicRefs.length) {
-            const nextRef = topicRefs[index + 1];
-            setRefStyle(state.currentRef, nextRef);
-            return {
-              ...state,
-              currentRef: nextRef,
-            };
-          }
-          break;
-        }
-        case isImageRef(state.currentRef): {
-          const imageRefs = state.refs.imageRefs.current;
-          const index = imageRefs.findIndex((ir) => ir === state.currentRef);
-          if (index !== -1 && index % 2 === 0) {
-            const nextRef = imageRefs[index + 1];
-            setRefStyle(state.currentRef, nextRef);
-            return {
-              ...state,
-              currentRef: nextRef,
-            };
-          }
-          break;
-        }
-
-        default:
-          break;
-      }
-      return state;
-    });
+    const refs = get().refs;
+    const currentPage = get().currentPage;
+    const currentRef = get().currentRef;
+    const newRef = currentRef.down(refs, currentPage);
+    if (newRef !== currentRef) {
+      set((state) => ({ ...state, currentRef: newRef }));
+    }
   },
 });

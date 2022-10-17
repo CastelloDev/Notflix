@@ -1,6 +1,7 @@
 import GalleryTray from "components/GalleryTray/GalleryTray";
 import Header from "components/Header/Header";
 import TopicTray from "components/TopicTray/TopicTray";
+import { TopicRef } from "models/navRef";
 import { useEffect } from "react";
 import { useBoundStore } from "store/useBoundStore";
 import "./App.css";
@@ -40,7 +41,7 @@ const App = () => {
         case "Enter":
           currentRef.click();
           if (currentRef === refs.leftNavRef.current && currentPage === 2) {
-            setCurrentRef(refs.topicRefs.current[0]);
+            setCurrentRef(new TopicRef(refs.topicRefs.current[0]));
           }
           break;
         default:
